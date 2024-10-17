@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Sum Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .instructions {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Find Two Sum Indices</h1>
+    <div class="instructions">
+        <p>Enter a list of integers separated by commas (e.g., 2, 7, 11, 15).</p>
+        <p>Then, enter the target sum you want to find.</p>
+    </div>
+    <input type="text" id="arrayInput" placeholder="Enter integers here">
+    <input type="text" id="targetInput" placeholder="Enter target sum">
+    <button onclick="findTwoSum()">Find Indices</button>
+    <div class="result" id="result"></div>
+
+    <script>
+        function findTwoSum() {
+            const input = document.getElementById('arrayInput').value;
+            const target = parseInt(document.getElementById('targetInput').value);
+            const arr = input.split(',').map(Number); // Convert input string to an array of numbers
+            
+            if (arr.length === 0 || arr.some(isNaN) || isNaN(target)) {
+                document.getElementById('result').textContent = 'Please enter valid integers for both the array and target sum.';
+                return;
+            }
+
+            const numIndices = new Map(); // Create a map to store number and its index
+
+            for (let i = 0; i < arr.length; i++) {
+                const complement = target - arr[i]; // Calculate the complement
+                if (numIndices.has(complement)) {
+                    // If the complement exists in the map, return the indices
+                    document.getElementById('result').textContent = `Indices: ${numIndices.get(complement)}, ${i}`;
+                    return;
+                }
+                // Otherwise, add the number and its index to the map
+                numIndices.set(arr[i], i);
+            }
+            
+            document.getElementById('result').textContent = 'No two sum solution found.';
+        }
+    </script>
+</body>
+</html>
